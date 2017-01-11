@@ -1,0 +1,6 @@
+*.swp
+*.box
+*.vmdk
+*.iso
+.DS_Store
+builds/output-*
