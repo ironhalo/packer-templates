@@ -125,6 +125,7 @@
                 "scripts/ubuntu-16.04/common-packages.sh",
                 "scripts/ubuntu-16.04/virtualization-packages.sh",
                 "scripts/ubuntu-16.04/cleanup.sh",
+                "scripts/common/ssh-hostkey-cleanup.sh",
                 "scripts/common/minimize.sh"
             ]
         }
