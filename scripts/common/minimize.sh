@@ -3,21 +3,29 @@
 set -e
 set -x
 
-sudo dd if=/dev/zero of=/EMPTY bs=1M || :
-sudo rm /EMPTY
+echo "Whiteout root"
+count=$(df --sync -kP / | tail -1  | awk -F ' ' '{print $4}')
+let count--
+sudo dd if=/dev/zero of=/whitespace bs=1024 count=$count
+sudo rm -f /whitespace
 
-# In CentOS 7, blkid returns duplicate devices
-swap_device_uuid=`sudo /sbin/blkid -t TYPE=swap -o value -s UUID | uniq`
-swap_device_label=`sudo /sbin/blkid -t TYPE=swap -o value -s LABEL | uniq`
+echo "Whiteout /boot"
+count=$(df --sync -kP /boot | tail -1  | awk -F ' ' '{print $4}')
+let count--
+sudo dd if=/dev/zero of=/boot/whitespace bs=1024 count=$count
+sudo rm -f /boot/whitespace
 
-if [ -n "$swap_device_uuid" ]
-then
-	swap_device=`readlink -f /dev/disk/by-uuid/"$swap_device_uuid"`
-elif [ -n "$swap_device_label" ]
-then
-	swap_device=`readlink -f /dev/disk/by-label/"$swap_device_label"`
-fi
+echo "Whiteout /tmp"
+count=$(df --sync -kP /tmp | tail -1  | awk -F ' ' '{print $4}')
+let count--
+sudo dd if=/dev/zero of=/tmp/whitespace bs=1024 count=$count
+sudo rm -f /tmp/whitespace
 
-sudo /sbin/swapoff "$swap_device"
-sudo dd if=/dev/zero of="$swap_device" bs=1M || :
-sudo /sbin/mkswap ${swap_device_label:+-L "$swap_device_label"} ${swap_device_uuid:+-U "$swap_device_uuid"} "$swap_device"
+echo "Whiteout /var/log"
+count=$(df --sync -kP /var/log | tail -1  | awk -F ' ' '{print $4}')
+let count--
+sudo dd if=/dev/zero of=/var/log/whitespace bs=1024 count=$count
+sudo rm -f /var/log/whitespace
+
+echo "Syncing file systems"
+sudo sync
