@@ -33,7 +33,7 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-amd64-{{build_type}}",
+            "output_directory": "builds/output-ubuntu-16.04-nocm-{{build_type}}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
             "ssh_username": "root",
@@ -42,7 +42,7 @@
                 [ "modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}" ],
                 [ "modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}" ]
             ],
-            "vm_name": "ubuntu-16.04-amd64"
+            "vm_name": "ubuntu-16.04-nocm"
         },
         {
             "type": "vmware-iso",
@@ -77,12 +77,12 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-amd64-{{build_type}}",
+            "output_directory": "builds/output-ubuntu-16.04-nocm-{{build_type}}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
             "ssh_username": "root",
             "ssh_password": "vagrant",
-            "vm_name": "ubuntu-16.04-amd64",
+            "vm_name": "ubuntu-16.04-nocm",
             "vmx_data": {
                 "memsize": "{{user `memory`}}",
                 "numvcpus": "{{user `cpus`}}",
@@ -97,7 +97,7 @@
             "type": "vagrant",
 	    "only": [ "virtualbox-iso" ],
             "compression_level": "{{user `compression_level`}}",
-            "output": "builds/ubuntu-16.04-amd64-{{.Provider}}.box",
+            "output": "builds/ubuntu-16.04-nocm-{{.Provider}}.box",
             "keep_input_artifact": false
         },
 	{
@@ -120,11 +120,12 @@
         {
             "type": "shell",
             "scripts": [
-                "scripts/common/vagrant.sh",
                 "scripts/ubuntu-16.04/apt.sh",
                 "scripts/ubuntu-16.04/common-packages.sh",
                 "scripts/ubuntu-16.04/virtualization-packages.sh",
                 "scripts/common/ssh-hostkey-cleanup.sh",
+                "scripts/common/vagrant.sh",
+                "scripts/ubuntu-16.04/cleanup.sh",
                 "scripts/common/minimize.sh"
             ]
         }
@@ -136,7 +137,7 @@
             "headless": "false",
             "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
             "iso_checksum_type": "sha256",
-            "memory": "1024",
+            "memory": "512",
             "mirror": "http://releases.ubuntu.com",
             "ssh_timeout": "60m",
 	    "vsphere_cluster": " ",

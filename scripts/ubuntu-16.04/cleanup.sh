@@ -1,12 +1,19 @@
-#!/bin/bash
+#! /bin/bash
 
 set -e
 set -x
 
-sudo apt-get clean
+apt-get clean
+apt-get autoremove
 
-if [[ `echo ${PACKER_BUILDER_TYPE}` == vmware-iso ]]
+rm -rf /root/VBoxGuestAdditions.iso
+
+if [[ -f /root/.bash_history ]]
 then
-	sudo deluser --remove-home vagrant
-	sudo rm -rf /etc/sudoers.d/*
+	rm -f /root/.bash_history
+fi
+
+if [[ -f /home/vagrant/.bash_history ]]
+then
+	rm -f /home/vagrant/.bash_history
 fi
