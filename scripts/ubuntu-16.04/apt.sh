@@ -10,3 +10,4 @@ if [ "$ubuntu_version" == '12.04' ]; then
 fi
 
 apt-get update
+apt-get -y upgrade
