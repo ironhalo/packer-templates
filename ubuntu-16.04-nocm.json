@@ -104,6 +104,7 @@
             
             "type": "vsphere",
             "only": [ "vmware-iso" ],
+            "keep_input_artifact": false,
             "cluster": "{{user `vsphere_cluster`}}",
             "datacenter": "{{user `vsphere_datacenter`}}",
             "datastore": "{{user `vsphere_datastore`}}",
@@ -133,22 +134,12 @@
     "variables": {
             "compression_level": "6",
             "cpus": "1",
-            "disk_size": "20000",
-            "headless": "false",
+            "disk_size": "10000",
+            "headless": "true",
             "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
             "iso_checksum_type": "sha256",
             "memory": "512",
             "mirror": "http://releases.ubuntu.com",
-            "ssh_timeout": "60m",
-	    "vsphere_cluster": " ",
-	    "vsphere_datacenter": " ",
-            "vsphere_datastore": " ",
-            "vsphere_host": " ",
-            "vsphere_username": " ",
-            "vsphere_password": " ",
-            "vsphere_vm_name": " ",
-            "vsphere_disk_mode": " ",
-            "vsphere_vm_folder": " ",
-	    "vsphere_vm_network": " "
+            "ssh_timeout": "60m"
     }
 }
