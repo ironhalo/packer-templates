@@ -7,7 +7,7 @@ if [[ `echo ${PACKER_BUILDER_TYPE}` == virtualbox-iso ]]
 then
 	date | sudo tee /etc/vagrant_box_build_time
 
-	useradd -m -p JWA0y28BTQeyo -c "Vagrant User" vagrant
+	useradd -m -p JWA0y28BTQeyo -s /bin/bash -c "Vagrant User" vagrant
 
 	mkdir -p ~vagrant/.ssh
 	curl -fsSLo ~vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub

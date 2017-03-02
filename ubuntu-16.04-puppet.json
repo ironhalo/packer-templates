@@ -33,7 +33,7 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-64-nocm-{{build_type}}-{{user `version` }}",
+            "output_directory": "builds/output-ubuntu-16.04-64-puppet-{{build_type}}-{{user `version`}}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
             "ssh_username": "root",
@@ -42,7 +42,7 @@
                 [ "modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}" ],
                 [ "modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}" ]
             ],
-            "vm_name": "ubuntu-16.04-64-nocm"
+            "vm_name": "ubuntu-16.04-64-puppet"
         },
         {
             "type": "vmware-iso",
@@ -77,12 +77,12 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-64-nocm-{{build_type}}-{{user `version` }}",
+            "output_directory": "builds/output-ubuntu-16.04-64-puppet-{{build_type}}-{{user `version`}}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
             "ssh_username": "root",
             "ssh_password": "vagrant",
-            "vm_name": "ubuntu-16.04-64-nocm",
+            "vm_name": "ubuntu-16.04-64-puppet",
             "vmx_data": {
                 "memsize": "{{user `memory`}}",
                 "numvcpus": "{{user `cpus`}}",
@@ -97,7 +97,7 @@
             "type": "vagrant",
 	    "only": [ "virtualbox-iso" ],
             "compression_level": "{{user `compression_level`}}",
-            "output": "builds/ubuntu-16.04-64-nocm-{{.Provider}}-{{user `version`}}.box",
+            "output": "builds/ubuntu-16.04-64-puppet-{{.Provider}}-{{user `version`}}.box",
             "keep_input_artifact": false
         },
 	{
@@ -122,6 +122,7 @@
             "type": "shell",
             "scripts": [
                 "scripts/ubuntu-16.04/apt.sh",
+                "scripts/ubuntu-16.04/puppet-install.sh",
                 "scripts/ubuntu-16.04/common-packages.sh",
                 "scripts/ubuntu-16.04/virtualization-packages.sh",
                 "scripts/common/ssh-hostkey-cleanup.sh",
@@ -142,6 +143,6 @@
             "mirror": "http://releases.ubuntu.com",
             "ssh_timeout": "60m",
             "version": "1.0.0",
-	    "vsphere_vm_name": "ubuntu-16.04-64-nocm-1.0.0"
+	    "vsphere_vm_name": "ubuntu-16.04-64-puppet-1.0.0"
     }
 }
