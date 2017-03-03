@@ -33,16 +33,16 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-amd64-{{build_type}}",
+            "output_directory": "builds/output-ubuntu-16.04-64-nocm-{{build_type}}-{{user `version` }}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
-            "ssh_username": "vagrant",
+            "ssh_username": "root",
             "ssh_password": "vagrant",
             "vboxmanage": [
                 [ "modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}" ],
                 [ "modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}" ]
             ],
-            "vm_name": "ubuntu-16.04-amd64"
+            "vm_name": "ubuntu-16.04-64-nocm"
         },
         {
             "type": "vmware-iso",
@@ -77,12 +77,12 @@
 		    "iso/ubuntu-16.04.1-server-amd64.iso",
 		    "{{user `mirror`}}/16.04/ubuntu-16.04.1-server-amd64.iso"
 	    ],
-            "output_directory": "builds/output-ubuntu-16.04-amd64-{{build_type}}",
+            "output_directory": "builds/output-ubuntu-16.04-64-nocm-{{build_type}}-{{user `version` }}",
             "shutdown_command": "sudo systemctl poweroff",
             "ssh_timeout": "{{user `ssh_timeout`}}",
-            "ssh_username": "vagrant",
+            "ssh_username": "root",
             "ssh_password": "vagrant",
-            "vm_name": "ubuntu-16.04-amd64",
+            "vm_name": "ubuntu-16.04-64-nocm",
             "vmx_data": {
                 "memsize": "{{user `memory`}}",
                 "numvcpus": "{{user `cpus`}}",
@@ -97,13 +97,14 @@
             "type": "vagrant",
 	    "only": [ "virtualbox-iso" ],
             "compression_level": "{{user `compression_level`}}",
-            "output": "builds/ubuntu-16.04-amd64-{{.Provider}}.box",
+            "output": "builds/ubuntu-16.04-64-nocm-{{.Provider}}-{{user `version`}}.box",
             "keep_input_artifact": false
         },
 	{
             
             "type": "vsphere",
             "only": [ "vmware-iso" ],
+            "keep_input_artifact": false,
             "cluster": "{{user `vsphere_cluster`}}",
             "datacenter": "{{user `vsphere_datacenter`}}",
             "datastore": "{{user `vsphere_datastore`}}",
@@ -120,11 +121,12 @@
         {
             "type": "shell",
             "scripts": [
-                "scripts/common/vagrant.sh",
                 "scripts/ubuntu-16.04/apt.sh",
                 "scripts/ubuntu-16.04/common-packages.sh",
                 "scripts/ubuntu-16.04/virtualization-packages.sh",
                 "scripts/common/ssh-hostkey-cleanup.sh",
+                "scripts/common/vagrant.sh",
+                "scripts/ubuntu-16.04/cleanup.sh",
                 "scripts/common/minimize.sh"
             ]
         }
@@ -132,22 +134,14 @@
     "variables": {
             "compression_level": "6",
             "cpus": "1",
-            "disk_size": "20000",
-            "headless": "false",
+            "disk_size": "10240",
+            "headless": "true",
             "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
             "iso_checksum_type": "sha256",
-            "memory": "1024",
+            "memory": "512",
             "mirror": "http://releases.ubuntu.com",
             "ssh_timeout": "60m",
-	    "vsphere_cluster": " ",
-	    "vsphere_datacenter": " ",
-            "vsphere_datastore": " ",
-            "vsphere_host": " ",
-            "vsphere_username": " ",
-            "vsphere_password": " ",
-            "vsphere_vm_name": " ",
-            "vsphere_disk_mode": " ",
-            "vsphere_vm_folder": " ",
-	    "vsphere_vm_network": " "
+            "version": "1.0.0",
+	    "vsphere_vm_name": "ubuntu-16.04-64-nocm-1.0.0"
     }
 }
